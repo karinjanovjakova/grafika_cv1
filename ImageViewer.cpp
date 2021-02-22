@@ -4,7 +4,10 @@ ImageViewer::ImageViewer(QWidget* parent)
 	: QMainWindow(parent), ui(new Ui::ImageViewerClass)
 {
 	ui->setupUi(this);
-	ui->groupBox->setVisible(false);
+
+	openNewTabForImg(new ViewerWidget("default", QSize(500, 500)));	//vytvorenie defaultneho obrazku s osou (20 dielikov=defaultna hodnota spinboxu)
+	getCurrentViewerWidget()->nakresliOsi(ui->spinBox->value());
+	ui->groupBox->setVisible(true);
 }
 
 //ViewerWidget functions
