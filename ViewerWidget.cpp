@@ -121,39 +121,85 @@ void ViewerWidget::nakresliCosinus(int N, int dieliky, int typ) {
 	double dielik = (img->width() - 10.) / dieliky, x1 = img->width() / 2., x2 = img->width() / 2.;
 
 	if (typ == 0) {
+		double a = (N * M_PI) / (dieliky / 2.);
 		pen.setWidth(5);
 		painter->setPen(pen);
-		for (i = 0; i < dieliky / 2 + 1; i++) {
-			painter->drawPoint(x1, -(img->height()-5) / 2 * qCos(i * a) + img->height() / 2);
-			painter->drawPoint(x2, -(img->height()-5) / 2 * qCos(-i * a) + img->height() / 2);
-			x1 += dielik;
-			x2 += -dielik;
+		if (dieliky % 2 == 0) {
+			for (i = 0; i < dieliky / 2 + 1; i++) {
+				painter->drawPoint(x1, -(img->height() - 5) / 2 * qCos(i * a) + img->height() / 2);
+				painter->drawPoint(x2, -(img->height() - 5) / 2 * qCos(-i * a) + img->height() / 2);
+				x1 += dielik;
+				x2 += -dielik;
+			}
+		}
+		if (dieliky % 2 == 1) {
+			double a = (N * M_PI) / ((dieliky) / 2.);
+			x1 += dielik / 2.;
+			x2 += -dielik / 2.;
+			for (i = 0; i < dieliky / 2 + 1; i++) {
+				painter->drawPoint(x1, -(img->height() - 5) / 2 * qCos(i * a + a / 2.) + img->height() / 2);
+				painter->drawPoint(x2, -(img->height() - 5) / 2 * qCos(-i * a - a / 2.) + img->height() / 2);
+				x1 += dielik;
+				x2 += -dielik;
+			}
 		}
 	}
 	if (typ == 1) {
 		QPoint A, B, C, D;
-		for (i = 0; i < dieliky / 2 + 1; i++) {
-			if (i == 0) {
-				A.setX(x1);
-				A.setY(-(img->height() - 5) / 2 * qCos(i * a) + img->height() / 2);
-				B.setX(x2);
-				B.setY(-(img->height() - 5) / 2 * qCos(-i * a) + img->height() / 2);
-				x1 += dielik;
-				x2 += -dielik;
+		if (dieliky % 2 == 0) {
+			for (i = 0; i < dieliky / 2 + 1; i++) {
+				if (i == 0) {
+					A.setX(x1);
+					A.setY(-(img->height() - 5) / 2 * qCos(i * a) + img->height() / 2);
+					B.setX(x2);
+					B.setY(-(img->height() - 5) / 2 * qCos(-i * a) + img->height() / 2);
+					x1 += dielik;
+					x2 += -dielik;
+				}
+				else {
+					C.setX(A.x());
+					C.setY(A.y());
+					D.setX(B.x());
+					D.setY(B.y());
+					A.setX(x1);
+					A.setY(-(img->height() - 5) / 2 * qCos(i * a) + img->height() / 2);
+					B.setX(x2);
+					B.setY(-(img->height() - 5) / 2 * qCos(-i * a) + img->height() / 2);
+					painter->drawLine(A, C);
+					painter->drawLine(B, D);
+					x1 += dielik;
+					x2 += -dielik;
+				}
 			}
-			else {
-				C.setX(A.x());
-				C.setY(A.y());
-				D.setX(B.x());
-				D.setY(B.y());
-				A.setX(x1);
-				A.setY(-(img->height()-5) / 2 * qCos(i * a) + img->height() / 2);
-				B.setX(x2);
-				B.setY(-(img->height() - 5) / 2 * qCos(-i * a) + img->height() / 2);
-				painter->drawLine(A, C);
-				painter->drawLine(B, D);
-				x1 += dielik;
-				x2 += -dielik;
+		}
+		if (dieliky % 2 == 1) {
+			double a = (N * M_PI) / ((dieliky) / 2.);
+			x1 += dielik / 2.;
+			x2 += -dielik / 2.;
+			for (i = 0; i < dieliky / 2 + 1; i++) {
+				if (i == 0) {
+					A.setX(x1);
+					A.setY(-(img->height() - 5) / 2 * qCos(i * a + a / 2.) + img->height() / 2);
+					B.setX(x2);
+					B.setY(-(img->height() - 5) / 2 * qCos(-i * a - a / 2.) + img->height() / 2);
+					painter->drawLine(A, B);
+					x1 += dielik;
+					x2 += -dielik;
+				}
+				else {
+					C.setX(A.x());
+					C.setY(A.y());
+					D.setX(B.x());
+					D.setY(B.y());
+					A.setX(x1);
+					A.setY(-(img->height() - 5) / 2 * qCos(i * a + a / 2.) + img->height() / 2);
+					B.setX(x2);
+					B.setY(-(img->height() - 5) / 2 * qCos(-i * a - a / 2.) + img->height() / 2);
+					painter->drawLine(A, C);
+					painter->drawLine(B, D);
+					x1 += dielik;
+					x2 += -dielik;
+				}
 			}
 		}
 	}
@@ -181,44 +227,91 @@ void ViewerWidget::nakresliSinus(int N, int dieliky, int typ) {
 	pen.setColor("red");
 	painter->setPen(pen);
 
-	double a = (N * M_PI) / (dieliky / 2);
+	double a = (N * M_PI) / (dieliky / 2.);
 	int i;
 	double dielik = (img->width() - 10.) / dieliky, x1 = img->width() / 2., x2 = img->width() / 2.;
 
+
 	if (typ == 0) {
+		double a = (N * M_PI) / (dieliky / 2.);
 		pen.setWidth(5);
 		painter->setPen(pen);
-		for (i = 0; i < dieliky / 2 + 1; i++) {
-			painter->drawPoint(x1, -(img->height()-10) / 2 * qSin(i * a) + img->height() / 2);
-			painter->drawPoint(x2, -(img->height()-10) / 2 * qSin(-i * a) + img->height() / 2);
-			x1 += dielik;
-			x2 += -dielik;
+		if (dieliky % 2 == 0) {
+			for (i = 0; i < dieliky / 2 + 1; i++) {
+				painter->drawPoint(x1, -(img->height() - 5) / 2 * qSin(i * a) + img->height() / 2);
+				painter->drawPoint(x2, -(img->height() - 5) / 2 * qSin(-i * a) + img->height() / 2);
+				x1 += dielik;
+				x2 += -dielik;
+			}
+		}
+		if (dieliky % 2 == 1) {
+			double a = (N * M_PI ) / (( dieliky  )/ 2.);
+			x1 += dielik / 2.;
+			x2 += -dielik / 2.;
+			for (i = 0; i < dieliky / 2 + 1; i++) {
+				painter->drawPoint(x1, -(img->height() - 5) / 2 * qSin(i * a + a/2. ) + img->height() / 2);
+				painter->drawPoint(x2, -(img->height() - 5) / 2 * qSin(-i * a - a / 2.) + img->height() / 2);
+				x1 += dielik;
+				x2 += -dielik;
+			}
 		}
 	}
 	if (typ == 1) {
 		QPoint A, B, C, D;
-		for (i = 0; i < dieliky / 2 + 1; i++) {
-			if (i == 0) {
-				A.setX(x1);
-				A.setY(-(img->height() - 5) / 2 * qSin(i * a) + img->height() / 2);
-				B.setX(x2);
-				B.setY(-(img->height() - 5) / 2 * qSin(-i * a) + img->height() / 2);
-				x1 += dielik;
-				x2 += -dielik;
+		if (dieliky % 2 == 0) {
+			for (i = 0; i < dieliky / 2 + 1; i++) {
+				if (i == 0) {
+					A.setX(x1);
+					A.setY(-(img->height() - 5) / 2 * qSin(i * a) + img->height() / 2);
+					B.setX(x2);
+					B.setY(-(img->height() - 5) / 2 * qSin(-i * a) + img->height() / 2);
+					x1 += dielik;
+					x2 += -dielik;
+				}
+				else {
+					C.setX(A.x());
+					C.setY(A.y());
+					D.setX(B.x());
+					D.setY(B.y());
+					A.setX(x1);
+					A.setY(-(img->height() - 5) / 2 * qSin(i * a) + img->height() / 2);
+					B.setX(x2);
+					B.setY(-(img->height() - 5) / 2 * qSin(-i * a) + img->height() / 2);
+					painter->drawLine(A, C);
+					painter->drawLine(B, D);
+					x1 += dielik;
+					x2 += -dielik;
+				}
 			}
-			else {
-				C.setX(A.x());
-				C.setY(A.y());
-				D.setX(B.x());
-				D.setY(B.y());
-				A.setX(x1);
-				A.setY(-(img->height() - 5) / 2 * qSin(i * a) + img->height() / 2);
-				B.setX(x2);
-				B.setY(-(img->height() - 5) / 2 * qSin(-i * a) + img->height() / 2);
-				painter->drawLine(A, C);
-				painter->drawLine(B, D);
-				x1 += dielik;
-				x2 += -dielik;
+		}
+		if (dieliky % 2 == 1) {
+			double a = (N * M_PI) / ((dieliky) / 2.);
+			x1 += dielik / 2.;
+			x2 += -dielik / 2.;
+			for (i = 0; i < dieliky / 2 + 1; i++) {
+				if (i == 0) {
+					A.setX(x1);
+					A.setY(-(img->height() - 5) / 2 * qSin(i * a + a / 2.) + img->height() / 2);
+					B.setX(x2);
+					B.setY(-(img->height() - 5) / 2 * qSin(-i * a - a / 2.) + img->height() / 2);
+					painter->drawLine(A, B);
+					x1 += dielik;
+					x2 += -dielik;
+				}
+				else {
+					C.setX(A.x());
+					C.setY(A.y());
+					D.setX(B.x());
+					D.setY(B.y());
+					A.setX(x1);
+					A.setY(-(img->height() - 5) / 2 * qSin(i * a + a / 2.) + img->height() / 2);
+					B.setX(x2);
+					B.setY(-(img->height() - 5) / 2 * qSin(-i * a - a / 2.) + img->height() / 2);
+					painter->drawLine(A, C);
+					painter->drawLine(B, D);
+					x1 += dielik;
+					x2 += -dielik;
+				}
 			}
 		}
 	}
