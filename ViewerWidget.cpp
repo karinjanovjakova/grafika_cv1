@@ -156,6 +156,8 @@ void ViewerWidget::nakresliCosinus(int N, int dieliky, int typ) {
 		for (i = 0; i < dieliky / 2 + 1; i++) {
 			painter->fillRect(x1, img->height() / 2, dielik, -(img->height() - 5) / 2 * qCos(i * a), Qt::red);
 			painter->fillRect(x2, img->height() / 2, dielik, -(img->height() - 5) / 2 * qCos(-i * a), Qt::red);
+			painter->drawRect(x1, img->height() / 2, dielik, -(img->height() - 5) / 2 * qCos(i * a));
+			painter->drawRect(x2, img->height() / 2, dielik, -(img->height() - 5) / 2 * qCos(-i * a));
 			x1 += dielik;
 			x2 += -dielik;
 		}
@@ -219,6 +221,8 @@ void ViewerWidget::nakresliSinus(int N, int dieliky, int typ) {
 		for (i = 0; i < dieliky / 2 + 1; i++) {
 			painter->fillRect(x1, img->height() / 2, dielik, -(img->height() - 5) / 2 * qSin(i * a), Qt:: red);
 			painter->fillRect(x2, img->height() / 2, dielik, -(img->height() - 5) / 2 * qSin(-i * a), Qt:: red);
+			painter->drawRect(x1, img->height() / 2, dielik, -(img->height() - 5) / 2 * qSin(i * a));
+			painter->drawRect(x2, img->height() / 2, dielik, -(img->height() - 5) / 2 * qSin(-i * a));
 			x1 += dielik;
 			x2 += -dielik;
 		}
