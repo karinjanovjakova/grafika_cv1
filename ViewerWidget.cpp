@@ -84,11 +84,18 @@ void ViewerWidget::nakresliOsi(int a) {
 	painter->drawLine(xs, xk);
 	painter->drawLine(ys, yk);
 	
-	int dielik = (w - 10) / a;
-	int dieliky = (h - 10) / a;
-	int i, x1 = w / 2, x2 = w / 2, y1 = h / 2, y2 = h / 2;
+	double dielikx = (w - 10.)/ a;
+	double dieliky = (h - 10.) / a;
+	int i;
 
-	for (i = 0; i < a/2; i++) {
+	
+	for (i = 0; i < a+1; i++) {
+		//qDebug() << i * dielikx + 5;
+		painter->drawLine(i * dielikx + 5, h / 2 + 5, i * dielikx + 5, h / 2 - 5);
+		painter->drawLine(w / 2 - 5, i * dieliky + 5, w / 2 + 5, i * dieliky + 5);
+	}
+
+	/*for (i = 0; i < a/2; i++) {
 		x1 += dielik;
 		x2 += -dielik;
 		y1 += dieliky;
@@ -97,7 +104,7 @@ void ViewerWidget::nakresliOsi(int a) {
 		painter->drawLine(x2, h / 2 + 5, x2, h / 2 - 5);
 		painter->drawLine(w / 2 - 5, y1, w / 2 + 5, y1);
 		painter->drawLine(w / 2 - 5, y2, w / 2 + 5, y2);
-	};
+	};*/
 }
 
 void ViewerWidget::nakresliCosinus(int N, int dieliky, int typ) {
@@ -110,15 +117,15 @@ void ViewerWidget::nakresliCosinus(int N, int dieliky, int typ) {
 	painter->setPen(pen);
 
 	double a = (N* M_PI)/(dieliky/2);
-	int i, x1 = img->width() / 2, x2 = img->width() / 2;
-	int dielik = (img->width() - 10) / dieliky;
+	int i;
+	double dielik = (img->width() - 10.) / dieliky, x1 = img->width() / 2., x2 = img->width() / 2.;
 
 	if (typ == 0) {
 		pen.setWidth(5);
 		painter->setPen(pen);
 		for (i = 0; i < dieliky / 2 + 1; i++) {
-			painter->drawPoint(x1, -(img->height() - 5) / 2 * qCos(i * a) + img->height() / 2);
-			painter->drawPoint(x2, -(img->height() - 5) / 2 * qCos(-i * a) + img->height() / 2);
+			painter->drawPoint(x1, -(img->height()-5) / 2 * qCos(i * a) + img->height() / 2);
+			painter->drawPoint(x2, -(img->height()-5) / 2 * qCos(-i * a) + img->height() / 2);
 			x1 += dielik;
 			x2 += -dielik;
 		}
@@ -175,15 +182,15 @@ void ViewerWidget::nakresliSinus(int N, int dieliky, int typ) {
 	painter->setPen(pen);
 
 	double a = (N * M_PI) / (dieliky / 2);
-	int i, x1 = img->width() / 2, x2 = img->width() / 2;
-	int dielik = (img->width() - 10) / dieliky;
+	int i;
+	double dielik = (img->width() - 10.) / dieliky, x1 = img->width() / 2., x2 = img->width() / 2.;
 
 	if (typ == 0) {
 		pen.setWidth(5);
 		painter->setPen(pen);
 		for (i = 0; i < dieliky / 2 + 1; i++) {
-			painter->drawPoint(x1, -(img->height() - 5) / 2 * qSin(i * a) + img->height() / 2);
-			painter->drawPoint(x2, -(img->height() - 5) / 2 * qSin(-i * a) + img->height() / 2);
+			painter->drawPoint(x1, -(img->height()-10) / 2 * qSin(i * a) + img->height() / 2);
+			painter->drawPoint(x2, -(img->height()-10) / 2 * qSin(-i * a) + img->height() / 2);
 			x1 += dielik;
 			x2 += -dielik;
 		}

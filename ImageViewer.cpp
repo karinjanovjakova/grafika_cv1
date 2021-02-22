@@ -224,17 +224,7 @@ void ImageViewer::on_kresli_clicked() {
 		msgBox.exec();
 		return;
 	}
-
 	dieliky = ui->spinBox->value();
-
-	if (dieliky%2==1) {
-		dieliky += 1;
-		ui->spinBox->setValue(dieliky);
-		msgBox.setText(u8"Poèet dielikov musí by párny. Zvolený poèet bol automaticky navýšený o 1.");
-		msgBox.setIcon(QMessageBox::Information);
-		msgBox.exec();
-		return;
-	}
 	N = ui->spinBox_2->value();
 	if (ui->comboBox->currentIndex() == 0) {			
 		getCurrentViewerWidget()->nakresliSinus(N, dieliky, typ);
